@@ -10,6 +10,14 @@
   --bone: #eee8df;   /* primary text */
   --sodium: #f29b38; /* the one accent: warm signal */
 
+  /* Type scale (1.333, perfect fourth), body 17-19px. Keep to it. */
+  --step--1: 0.875rem;
+  --step-0: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --step-1: clamp(1.375rem, 1.2rem + 0.6vw, 1.6rem);
+  --step-2: clamp(1.85rem, 1.5rem + 1.2vw, 2.4rem);
+  --step-3: clamp(2.5rem, 1.9rem + 2.4vw, 3.8rem);
+  --step-4: clamp(3.2rem, 2.2rem + 4.5vw, 6.4rem);
+
   --measure: 65ch;
   --gutter: clamp(1rem, 4vw, 3rem);
   --section-space: clamp(6rem, 14vw, 11rem);
@@ -39,7 +47,7 @@ body {
   background: var(--basalt);
   color: var(--bone);
   font-family: var(--font-sans);
-  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem); /* 17px → 19px */
+  font-size: var(--step-0);
   line-height: 1.65;
   overflow-x: clip;
 }
@@ -70,15 +78,18 @@ p { max-width: var(--measure); text-wrap: pretty; }
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--gutter);
-  padding-inline: var(--gutter);
+  row-gap: 2.5rem;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
   max-width: 90rem;
   margin-inline: auto;
 }
+.shell > * { min-width: 0; }
 
-.section { padding-block: var(--section-space); border-top: 1px solid var(--ash); }
+.section { padding-block: var(--section-space); }
 
 .eyebrow {
-  font-size: 0.875rem;
+  font-size: var(--step--1);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--sodium);

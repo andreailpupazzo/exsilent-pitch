@@ -4,9 +4,9 @@ import { Reveal } from "@/components/Reveal";
 // Phase 1: layout shell only. Content sections arrive in phase 2.
 export default function Home() {
   return (
-    <Section id="shell" index="00" label="Shell">
+    <Section id="shell" label="Shell">
       <Reveal>
-        <h2 className="text-5xl md:text-7xl">ExSilent</h2>
+        <h2 className="text-[length:var(--step-4)]">ExSilent</h2>
       </Reveal>
     </Section>
   );

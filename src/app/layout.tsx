@@ -18,7 +18,7 @@ const plex = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "ExSilent Ytango Mix — UK go-to-market",
+  title: "ExSilent Ytango Mix",
   description: "Go-to-market strategy for the ExSilent Ytango Mix in the UK private market.",
 };
 
