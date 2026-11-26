@@ -1,26 +1,108 @@
 @import "tailwindcss";
 
+/* ExSilent — design tokens. One dark theme, every colour explicit. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  --basalt: #14110f; /* base, warm near-black */
+  --ash: #2a2522;    /* surface / rules */
+  --fog: #8c847c;    /* secondary text (AA on basalt) */
+  --bone: #eee8df;   /* primary text */
+  --sodium: #f29b38; /* the one accent: warm signal */
+
+  --measure: 65ch;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --section-space: clamp(6rem, 14vw, 11rem);
+
+  --reveal-duration: 420ms;
+  --reveal-distance: 16px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-basalt: var(--basalt);
+  --color-ash: var(--ash);
+  --color-fog: var(--fog);
+  --color-bone: var(--bone);
+  --color-sodium: var(--sodium);
+  --font-display: var(--font-instrument), "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-sans: var(--font-plex), "Helvetica Neue", Arial, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--basalt);
+  color: var(--bone);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--basalt);
+  color: var(--bone);
+  font-family: var(--font-sans);
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem); /* 17px → 19px */
+  line-height: 1.65;
+  overflow-x: clip;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p { max-width: var(--measure); text-wrap: pretty; }
+
+/* All figures tabular, everywhere. */
+.num, td, th, data { font-variant-numeric: tabular-nums; }
+
+::selection { background: var(--sodium); color: var(--basalt); }
+
+:focus-visible {
+  outline: 3px solid var(--sodium);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Layout shell: 12-col editorial grid, left-aligned. */
+.shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  padding-inline: var(--gutter);
+  max-width: 90rem;
+  margin-inline: auto;
+}
+
+.section { padding-block: var(--section-space); border-top: 1px solid var(--ash); }
+
+.eyebrow {
+  font-size: 0.875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sodium);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Reveal: visible at rest. Only hidden once JS has armed it, and only below the fold. */
+[data-reveal="armed"] {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+}
+[data-reveal="shown"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--reveal-duration) var(--ease-out) var(--reveal-delay, 0ms),
+    transform var(--reveal-duration) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
 }
