@@ -117,3 +117,29 @@ p { max-width: var(--measure); text-wrap: pretty; }
   }
   [data-reveal] { opacity: 1 !important; transform: none !important; }
 }
+
+/* ---------- Phase 2: section primitives ---------- */
+.display { font-family: var(--font-display); }
+.t-4 { font-size: var(--step-4); line-height: 1; }
+.t-3 { font-size: var(--step-3); line-height: 1.05; }
+.t-2 { font-size: var(--step-2); line-height: 1.15; }
+.t-1 { font-size: var(--step-1); line-height: 1.35; }
+.t--1 { font-size: var(--step--1); line-height: 1.5; }
+.muted { color: var(--fog); }
+.accent { color: var(--sodium); }
+.rule { border-top: 1px solid var(--ash); }
+.panel { background: var(--ash); border-radius: 4px; }
+.stack { display: flex; flex-direction: column; gap: 1.25rem; }
+.cols-2 { display: grid; gap: 3rem; }
+.cols-3, .cols-4 { display: grid; gap: 2rem; }
+@media (min-width: 48rem) {
+  .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4rem; }
+  .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 64rem) { .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 32rem; }
+th, td { text-align: right; padding: 0.75rem 1rem 0.75rem 0; border-bottom: 1px solid var(--ash); }
+th:first-child, td:first-child { text-align: left; }
+th { font-weight: 500; color: var(--fog); font-size: var(--step--1); letter-spacing: 0.06em; text-transform: uppercase; }
