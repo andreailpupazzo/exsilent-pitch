@@ -26,141 +26,156 @@ const objections = [
   ["“Three cities is not a UK strategy.”", "Not yet. It is a learning plan. We scale when revenue per practice is predictable, not when the calendar says so. Expanding a channel before that point is the standard way a small company burns its cash."],
 ];
 
-function Wave() {
-  // Resolved state of the hero waveform (canvas version arrives in phase 3).
+function Wave({ className = "" }: { className?: string }) {
+  // Resolved state of the hero waveform (scroll-driven canvas arrives in phase 3).
   const pts = Array.from({ length: 241 }, (_, i) => {
     const x = (i / 240) * 1200;
-    const y = 100 + Math.sin(i / 9) * 38 * Math.sin((i / 240) * Math.PI);
+    const y = 150 + Math.sin(i / 8) * 90 * Math.sin((i / 240) * Math.PI);
     return `${x.toFixed(1)},${y.toFixed(1)}`;
   }).join(" ");
   return (
-    <svg viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden className="absolute inset-x-0 bottom-0 h-40 w-full opacity-60">
-      <polyline points={pts} fill="none" stroke="var(--sodium)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+    <svg viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden className={className}>
+      <polyline points={pts} fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
     </svg>
+  );
+}
+
+function Stat({ v, l, className = "" }: { v: string; l: string; className?: string }) {
+  return (
+    <div className={`card flex flex-col justify-between gap-10 ${className}`}>
+      <dd className="display t-3 num">{v}</dd>
+      <dt className="muted">{l}</dt>
+    </div>
   );
 }
 
 export default function Home() {
   return (
     <>
+      {/* Top bar */}
+      <div className="wrap flex items-center justify-between py-5">
+        <span className="display text-xl">ExSilent</span>
+        <a href="#ask" className="pill py-2.5 text-[0.95rem]">The ask</a>
+      </div>
+
       {/* 4.1 Hero */}
-      <header className="relative overflow-hidden pb-48 pt-[clamp(5rem,14vh,9rem)]">
-        <div className="shell">
-          <div className="col-span-12 stack lg:col-span-10">
-            <p className="eyebrow">ExSilent · Ytango Mix · UK private market</p>
-            <h1 className="t-4">Your best years, heard in&nbsp;full.</h1>
-            <p className="t-1 muted">The world&rsquo;s first hearing aid with the microphone and receiver in the canal. It sounds like hearing, not like a hearing aid.</p>
-            <a href="#problem" className="t--1 mt-6 inline-flex w-fit items-center gap-3 text-bone">
-              Scroll <span aria-hidden className="accent">↓</span>
-            </a>
-          </div>
+      <header className="wrap pb-[var(--section-space)] pt-[clamp(2rem,6vw,5rem)]">
+        <div className="flex flex-col gap-7">
+          <p className="eyebrow">ExSilent · Ytango Mix · UK private market</p>
+          <h1 className="t-4 max-w-[12ch]">Your best years, heard in&nbsp;full.</h1>
+          <p className="t-1 muted">The world&rsquo;s first hearing aid with the microphone and receiver in the canal. It sounds like hearing, not like a hearing aid.</p>
+          <a href="#problem" className="pill mt-2 w-fit">Scroll <span aria-hidden>↓</span></a>
         </div>
-        <Wave />
+        <div className="card-signal mt-[clamp(3rem,6vw,5rem)] overflow-hidden rounded-[var(--radius)]">
+          <Wave className="block h-[clamp(12rem,28vw,22rem)] w-full text-ink" />
+        </div>
       </header>
 
       {/* 4.2 Problem */}
-      <Section id="problem" label="The problem">
-        <div className="cols-2">
-          <Reveal className="stack">
-            <h2 className="t-2">The market problem</h2>
-            <ul className="stack t-1">
-              <li><span className="num accent">2,407,653</span> hearing aids were supplied in the UK in 2025.</li>
-              <li><span className="num accent">78%</span> of them came free from the NHS.</li>
-              <li>Five companies make <span className="num accent">99%</span> of the world&rsquo;s hearing aids.</li>
-              <li>Nobody has heard of us.</li>
-            </ul>
+      <Section id="problem" eyebrow="The problem" title="Nobody has heard of us.">
+        <div className="grid gap-4 md:grid-cols-2">
+          <Reveal className="card flex flex-col gap-8">
+            <span className="chip">The market problem</span>
+            <dl className="grid gap-6">
+              <div><dd className="display t-2 num">2,407,653</dd><dt className="muted">hearing aids were supplied in the UK in 2025.</dt></div>
+              <div><dd className="display t-2 num">78%</dd><dt className="muted">of them came free from the NHS.</dt></div>
+              <div><dd className="display t-2 num">99%</dd><dt className="muted">of the world&rsquo;s hearing aids are made by five companies.</dt></div>
+            </dl>
           </Reveal>
-          <Reveal step={1} className="stack">
-            <h2 className="t-2">The human problem</h2>
-            <blockquote className="t-1 muted">A hearing aid is the first object most people buy that tells them they are getting old. That is why they wait years.</blockquote>
+          <Reveal step={1} className="card card-ink flex flex-col justify-between gap-8">
+            <span className="chip">The human problem</span>
+            <blockquote className="display t-2">A hearing aid is the first object most people buy that tells them they are getting old. That is why they wait years.</blockquote>
           </Reveal>
         </div>
         <Reveal>
-          <blockquote className="display t-3 mt-24 max-w-[22ch]">Everything worth hearing happens in a noisy room.</blockquote>
+          <blockquote className="display t-3 mt-[clamp(4rem,9vw,7rem)] max-w-[20ch]">Everything worth hearing happens in a <span className="text-signal">noisy room.</span></blockquote>
         </Reveal>
       </Section>
 
       {/* 4.3 Segments */}
-      <Section id="segments" label="Who we are for">
-        <p className="t-2 display max-w-[30ch]">The only two segments in this market that will buy from a brand they have never heard of.</p>
-        <div className="cols-2 mt-16">
-          <Reveal className="stack">
+      <Section id="segments" eyebrow="Who we are for" title="Two segments that will buy from a brand they have never heard of." lede="The only two in this market.">
+        <div className="grid gap-4 md:grid-cols-2">
+          <Reveal className="card card-ink flex flex-col gap-6">
+            <span className="chip">3.8m people · 56+ but they feel 53</span>
             <h3 className="t-2">Spirited Forerunners</h3>
-            <p className="num muted">3.8m people · 56+ but they feel 53</p>
-            <p>42% have hearing problems. 25% are open to a new brand, against a market average of 13%. World explorers, early adopters, they invest in their health regardless of price. They delay until they really need one, then decide in weeks.</p>
-            <p><span className="num accent t-1">21,546</span> expected buyers in year one, more than any other segment.</p>
+            <p className="muted">42% have hearing problems. 25% are open to a new brand, against a market average of 13%. World explorers, early adopters, they invest in their health regardless of price. They delay until they really need one, then decide in weeks.</p>
+            <p className="mt-auto"><span className="display t-3 num block">21,546</span><span className="muted">expected buyers in year one, more than any other segment.</span></p>
           </Reveal>
-          <Reveal step={1} className="stack">
+          <Reveal step={1} className="card card-signal flex flex-col gap-6">
+            <span className="chip">4.2m people · 56+ but they feel 44</span>
             <h3 className="t-2">Fashion Baby-boomers</h3>
-            <p className="num muted">4.2m people · 56+ but they feel 44</p>
-            <p>48% have hearing problems, the highest of all seven segments. 21% are open to a new brand, which is the largest open group in the market at 423,360 people. Stylish, social, ageless. They pay for design even from a brand they do not know.</p>
-            <p><span className="num accent t-1">17,781</span> expected buyers in year one.</p>
+            <p className="muted">48% have hearing problems, the highest of all seven segments. 21% are open to a new brand, which is the largest open group in the market at 423,360 people. Stylish, social, ageless. They pay for design even from a brand they do not know.</p>
+            <p className="mt-auto"><span className="display t-3 num block">17,781</span><span className="muted">expected buyers in year one.</span></p>
           </Reveal>
         </div>
-        <dl className="cols-4 mt-20 rule pt-10">
-          {[["15%", "of UK adults"], ["34%", "of expected buyers"], ["39,327", "buyers in year one"], ["22.8%", "openness, against a 13% market average"]].map(([v, l], i) => (
-            <Reveal key={l} step={i} className="flex flex-col-reverse gap-2">
-              <dt className="muted">{l}</dt>
-              <dd className="display t-3 num">{v}</dd>
-            </Reveal>
-          ))}
+        <dl className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Stat v="15%" l="of UK adults" />
+          <Stat v="34%" l="of expected buyers" />
+          <Stat v="39,327" l="buyers in year one" />
+          <Stat v="22.8%" l="openness, against a 13% market average" />
         </dl>
-        <p className="t-1 mt-16">Size is not market. Waiting Elderly contain 5,250,000 people with hearing loss and produce fewer buyers than a segment less than half their size.</p>
+        <p className="t-1 mt-12"><strong className="font-semibold">Size is not market.</strong> <span className="muted">Waiting Elderly contain 5,250,000 people with hearing loss and produce fewer buyers than a segment less than half their size.</span></p>
       </Section>
 
       {/* 4.4 Why they buy */}
-      <Section id="why" label="Why they buy">
-        <ol className="stack gap-12">
+      <Section id="why" eyebrow="Why they buy" title="One claim, three pieces of evidence.">
+        <div className="grid gap-4 md:grid-cols-3">
+          <Reveal className="card card-ink flex flex-col justify-between gap-10 md:col-span-3 md:flex-row md:items-end">
+            <div className="flex flex-col gap-4">
+              <span className="chip">The claim</span>
+              <h3 className="t-3">MaRiC</h3>
+            </div>
+            <p className="t-1 md:max-w-[34ch]">The world&rsquo;s first hearing aid with microphone and receiver in the canal. Nothing to see, and nothing that sounds processed.</p>
+          </Reveal>
           {[
-            ["MaRiC", "The world’s first hearing aid with microphone and receiver in the canal. Nothing to see, and nothing that sounds processed.", "The claim"],
-            ["Nano-coating", "Rain, sweat and dust do not stop it. It travels.", "Evidence"],
-            ["AirTap", "A pat on the ear changes the setting, without stopping the conversation.", "Evidence"],
-            ["Five colours", "Chosen like a pair of frames, not prescribed like a device.", "Evidence"],
-          ].map(([h, b, tag], i) => (
-            <Reveal as="li" key={h} step={i} className={`grid gap-2 md:grid-cols-[14rem_1fr] md:gap-10 ${i === 0 ? "" : "rule pt-10"}`}>
-              <div>
-                <p className="eyebrow">{tag}</p>
-                <h3 className={i === 0 ? "t-3" : "t-2"}>{h}</h3>
-              </div>
-              <p className={i === 0 ? "t-1" : ""}>{b}</p>
+            ["Nano-coating", "Rain, sweat and dust do not stop it. It travels."],
+            ["AirTap", "A pat on the ear changes the setting, without stopping the conversation."],
+            ["Five colours", "Chosen like a pair of frames, not prescribed like a device."],
+          ].map(([h, b], i) => (
+            <Reveal key={h} step={i} className="card flex flex-col gap-4">
+              <span className="chip">Evidence</span>
+              <h3 className="t-2">{h}</h3>
+              <p className="muted">{b}</p>
             </Reveal>
           ))}
-        </ol>
-        <Reveal className="panel mt-20 p-[clamp(1.5rem,4vw,3rem)] stack">
-          <p className="eyebrow">Business model</p>
-          <p className="display t-3 num">€500 once, then €14 a&nbsp;month.</p>
+        </div>
+        <Reveal className="card card-signal mt-4 grid gap-6 md:grid-cols-[1.3fr_1fr] md:items-end">
+          <div className="flex flex-col gap-4">
+            <p className="eyebrow">Business model</p>
+            <p className="display t-3 num">€500 once, then €14 a&nbsp;month.</p>
+          </div>
           <p className="muted">Remote tuning anywhere in the world, software updates sent straight to the device, early access to what comes next.</p>
         </Reveal>
       </Section>
 
       {/* 4.5 Restaurant test — static visual version; audio arrives in phase 4 */}
-      <Section id="test" label="The restaurant test">
-        <div className="cols-2">
-          <div className="stack">
-            <p className="eyebrow">In a noisy restaurant</p>
-            <p className="display t-2 num" aria-label="Sentence partly masked by noise">Th_ f_r_y t_ N_x_s l_a_es at t_n p_st s_v_n.</p>
-            <fieldset className="stack t--1">
-              <legend className="muted mb-2">Which sentence did you hear?</legend>
+      <Section id="test" eyebrow="The restaurant test" title="Can you hear it?">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="card flex flex-col gap-6">
+            <span className="chip">In a noisy restaurant</span>
+            <p className="display t-2 num">Th_ f_r_y t_ N_x_s l_a_es at t_n p_st s_v_n.</p>
+            <fieldset className="flex flex-col gap-3">
+              <legend className="muted mb-3">Which sentence did you hear?</legend>
               {["The ferry to Naxos leaves at ten past seven.", "The fairy to Naxos leaves at ten past eleven.", "The very best taxis leave at ten to seven.", "The ferry to Lesbos leaves at twenty past seven."].map((s, i) => (
-                <label key={s} className="flex gap-3"><input type="radio" name="heard" id={`heard-${i}`} disabled /> {s}</label>
+                <label key={s} className="flex items-center gap-3 rounded-full bg-paper px-5 py-3"><input type="radio" name="heard" id={`heard-${i}`} disabled /> {s}</label>
               ))}
             </fieldset>
           </div>
-          <div className="stack">
-            <p className="eyebrow">With the Ytango Mix</p>
+          <div className="card card-ink flex flex-col gap-6">
+            <span className="chip">With the Ytango Mix</span>
             <p className="display t-2">The ferry to Naxos leaves at ten past seven.</p>
+            <p className="mt-auto t-1 muted">A hearing aid does not make the world louder, it changes the ratio between the voice you want and the noise you do not.</p>
           </div>
         </div>
-        <p className="t-1 mt-16 muted">A hearing aid does not make the world louder, it changes the ratio between the voice you want and the noise you do not.</p>
       </Section>
 
       {/* 4.6 Journey */}
-      <Section id="journey" label="The journey">
-        <ol className="stack gap-0">
+      <Section id="journey" eyebrow="The journey" title="Seven stages, from first doubt to first referral.">
+        <ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {journey.map(([stage, need, act], i) => (
-            <Reveal as="li" key={stage} className="rule grid gap-3 py-8 md:grid-cols-[4rem_14rem_1fr_1fr] md:gap-8">
-              <span className="num accent t-1">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="t-1 font-sans font-medium">{stage}</h3>
+            <Reveal as="li" key={stage} step={i % 3} className={`card flex flex-col gap-4 ${i === 5 ? "card-signal" : ""} ${i === 6 ? "lg:col-span-3 card-ink" : ""}`}>
+              <span className="display t-2 num text-signal">{String(i + 1).padStart(2, "0")}</span>
+              <h3 className="t-1 font-bold">{stage}</h3>
               <p className="muted">{need}</p>
               <p>{act}</p>
             </Reveal>
@@ -169,76 +184,79 @@ export default function Home() {
       </Section>
 
       {/* 4.7 Go to market */}
-      <Section id="gtm" label="Go to market">
-        <h2 className="t-3">We cannot buy attention. We can buy density.</h2>
-        <p className="t-1 mt-8 muted">Five companies own 99% of this market and can outspend us on media without noticing. So we do not compete for awareness. We concentrate distribution until our customers start meeting each other, and let them do the selling.</p>
-        <div className="cols-3 mt-16">
+      <Section id="gtm" eyebrow="Go to market" title="We cannot buy attention. We can buy density." lede="Five companies own 99% of this market and can outspend us on media without noticing. So we do not compete for awareness. We concentrate distribution until our customers start meeting each other, and let them do the selling.">
+        <div className="grid gap-4 md:grid-cols-3">
           {[
-            ["Partners", "€100,000", "20 to 25 independent audiologists across three metro clusters. Postcode exclusivity for 18 months, a share of the monthly service so they care about month twelve, and an ExSilent specialist working alongside them for the first 90 days."],
-            ["Website", "€100,000", "The verification channel. The three-minute test, the independent measurements, and a bookable slot within 48 hours."],
-            ["Platform", "€200,000", "The app and the €14 service. Remote tuning, updates, upgrades, and the one moment where we ask for a referral."],
-          ].map(([h, b, t], i) => (
-            <Reveal key={h} step={i} className="rule stack pt-8">
-              <h3 className="t-2">{h}</h3>
-              <p className="num accent t-1">{b}</p>
-              <p>{t}</p>
+            ["Partners", "€100,000", "20 to 25 independent audiologists across three metro clusters. Postcode exclusivity for 18 months, a share of the monthly service so they care about month twelve, and an ExSilent specialist working alongside them for the first 90 days.", ""],
+            ["Website", "€100,000", "The verification channel. The three-minute test, the independent measurements, and a bookable slot within 48 hours.", ""],
+            ["Platform", "€200,000", "The app and the €14 service. Remote tuning, updates, upgrades, and the one moment where we ask for a referral.", "card-ink"],
+          ].map(([h, b, t, c], i) => (
+            <Reveal key={h} step={i} className={`card flex flex-col gap-5 ${c}`}>
+              <span className="chip">{h}</span>
+              <p className="display t-3 num">{b}</p>
+              <p className="muted">{t}</p>
             </Reveal>
           ))}
         </div>
-        <p className="mt-12 muted"><span className="num text-bone">€100,000</span> of the €500,000 budget is deliberately unspent. The only channel that would absorb it is mass media, and half a million in UK mass media against companies this size buys invisibility.</p>
+        <div className="card mt-4 grid gap-6 border-2 border-dashed border-[#d9d5d0] bg-paper md:grid-cols-[auto_1fr] md:items-center md:gap-12">
+          <p className="display t-3 num text-stone">€100,000</p>
+          <p className="muted">of the €500,000 budget is deliberately unspent. The only channel that would absorb it is mass media, and half a million in UK mass media against companies this size buys invisibility.</p>
+        </div>
       </Section>
 
       {/* 4.8 Numbers */}
-      <Section id="numbers" label="The numbers">
-        <figure className="stack">
-          <figcaption className="muted t--1">Revenue by year, € millions</figcaption>
-          <div className="flex h-64 items-end gap-[clamp(0.5rem,3vw,2rem)]">
-            {years.map((r) => (
-              <div key={r.y} className="flex h-full flex-1 flex-col justify-end gap-2">
-                <span className="num t--1">€{r.rev.toFixed(2)}m</span>
-                <div className="bg-sodium" style={{ height: `${(r.rev / 5.31) * 80}%` }} />
-                <span className="num muted t--1">Year {r.y}</span>
-              </div>
-            ))}
-          </div>
-        </figure>
-        <div className="table-wrap mt-12">
-          <table>
-            <thead><tr><th>Year</th><th>New customers</th><th>Installed base</th><th>Revenue</th></tr></thead>
-            <tbody>
+      <Section id="numbers" eyebrow="The numbers" title="€16.0m in five years." lede={<>Of which <strong className="text-ink">€7.2m</strong> is recurring service. By year five, <strong className="text-ink">52%</strong> of revenue is money already earned.</>}>
+        <div className="grid gap-4 lg:grid-cols-[1.1fr_1fr]">
+          <figure className="card flex flex-col gap-6">
+            <figcaption className="muted t--1">Revenue by year, € millions</figcaption>
+            <div className="flex h-72 items-end gap-[clamp(0.5rem,2vw,1.25rem)]">
               {years.map((r) => (
-                <tr key={r.y}><td>{r.y}</td><td>{r.n}</td><td>{r.base}</td><td>€{r.rev.toFixed(2)}m</td></tr>
+                <div key={r.y} className="flex h-full flex-1 flex-col justify-end gap-2 text-center">
+                  <span className="num t--1 font-semibold">€{r.rev.toFixed(2)}m</span>
+                  <div className={`rounded-xl ${r.y === 5 ? "bg-signal" : "bg-ink"}`} style={{ height: `${(r.rev / 5.31) * 78}%` }} />
+                  <span className="num muted t--1">Y{r.y}</span>
+                </div>
               ))}
-            </tbody>
-          </table>
+            </div>
+          </figure>
+          <div className="card table-wrap">
+            <table>
+              <thead><tr><th>Year</th><th>New customers</th><th>Installed base</th><th>Revenue</th></tr></thead>
+              <tbody>
+                {years.map((r) => (
+                  <tr key={r.y}><td>{r.y}</td><td>{r.n}</td><td>{r.base}</td><td className="font-semibold">€{r.rev.toFixed(2)}m</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-        <p className="t-1 mt-10">Five-year revenue <span className="num accent">€16.0m</span>, of which <span className="num accent">€7.2m</span> is recurring service. By year five, <span className="num accent">52%</span> of revenue is money already earned.</p>
 
-        <Reveal className="mt-20 bg-sodium p-[clamp(1.5rem,5vw,4rem)] text-basalt stack">
-          <h2 className="t-3">We double sales without growing.</h2>
-          <p className="t-1 max-w-[50ch]">Hold market share flat at 5% for five years and never gain a single point. Year five still returns <span className="num">€2.48m</span> against <span className="num">€1.31m</span> in year one, because every customer keeps paying <span className="num">€168</span> a year. Everything above that is upside.</p>
+        <Reveal className="card card-ink mt-4 flex flex-col gap-8 py-[clamp(2.5rem,7vw,6rem)]">
+          <span className="chip">The key number</span>
+          <h3 className="t-4 max-w-[14ch]">We double sales without <span className="text-signal">growing.</span></h3>
+          <p className="t-1 muted">Hold market share flat at 5% for five years and never gain a single point. Year five still returns <strong className="num text-paper">€2.48m</strong> against <strong className="num text-paper">€1.31m</strong> in year one, because every customer keeps paying <strong className="num text-paper">€168</strong> a year. Everything above that is upside.</p>
         </Reveal>
 
-        <dl className="cols-3 mt-16">
-          {[["€254", "acquisition cost, year one"], ["€1,340", "five-year customer value"], ["5.3", "value to cost ratio"]].map(([v, l]) => (
-            <div key={l} className="rule flex flex-col-reverse gap-2 pt-6"><dt className="muted">{l}</dt><dd className="display t-3 num">{v}</dd></div>
-          ))}
+        <dl className="mt-4 grid gap-4 md:grid-cols-3">
+          <Stat v="€254" l="acquisition cost, year one" />
+          <Stat v="€1,340" l="five-year customer value" />
+          <Stat v="5.3" l="ratio of customer value to acquisition cost" className="card-signal" />
         </dl>
-        <p className="mt-8">If word of mouth works, acquisition cost falls below <span className="num">€100</span> by year five on the same budget.</p>
-        <p className="t--1 muted mt-10">Assumptions: 39,327 expected buyers a year in the two target segments, held flat; €500 device and €168 a year of service; 5% annual churn on the installed base; share rising from 5% to 13%.</p>
+        <p className="mt-8">If word of mouth works, acquisition cost falls below <strong className="num">€100</strong> by year five on the same budget.</p>
+        <p className="t--1 muted mt-6">Assumptions: 39,327 expected buyers a year in the two target segments, held flat; €500 device and €168 a year of service; 5% annual churn on the installed base; share rising from 5% to 13%.</p>
       </Section>
 
       {/* 4.9 Lessons */}
-      <Section id="lessons" label="Lessons learned">
-        <ol className="cols-3">
+      <Section id="lessons" eyebrow="Lessons learned" title="Three things we got wrong first.">
+        <ol className="grid gap-4 md:grid-cols-3">
           {[
             ["We hunted the biggest segment first.", "Waiting Elderly hold 5.25 million people with hearing loss and produce fewer buyers than a segment less than half their size. Size is not market."],
             ["We designed a free trial, then cut it.", "A free week is a cost. A word from a peer is free and more convincing."],
             ["We wanted national coverage.", "We cut it to three cities, because below a certain density our customers never meet each other and word of mouth never starts."],
           ].map(([h, b], i) => (
-            <Reveal as="li" key={h} step={i} className="rule stack pt-8">
-              <span className="num accent">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="t-1 font-sans font-medium">{h}</h3>
+            <Reveal as="li" key={h} step={i} className="card flex flex-col gap-4">
+              <span className="display t-2 num text-signal">{String(i + 1).padStart(2, "0")}</span>
+              <h3 className="t-1 font-bold">{h}</h3>
               <p className="muted">{b}</p>
             </Reveal>
           ))}
@@ -246,32 +264,29 @@ export default function Home() {
       </Section>
 
       {/* 4.10 Objections */}
-      <Section id="questions" label="Your questions">
-        <h2 className="t-3 mb-16">The questions you are about to ask</h2>
-        <div className="stack gap-0">
+      <Section id="questions" eyebrow="Your questions" title="The questions you are about to ask.">
+        <div className="grid gap-4">
           {objections.map(([q, a]) => (
-            <Reveal key={q} className="rule grid gap-4 py-10 md:grid-cols-2 md:gap-12">
-              <h3 className="t-1 display">{q}</h3>
-              <p>{a}</p>
+            <Reveal key={q} className="card grid gap-4 md:grid-cols-2 md:gap-12">
+              <h3 className="t-1 font-bold">{q}</h3>
+              <p className="muted">{a}</p>
             </Reveal>
           ))}
         </div>
       </Section>
 
       {/* 4.11 Ask */}
-      <section id="ask" className="section min-h-[90vh] content-center">
-        <div className="shell">
-          <div className="col-span-12 stack lg:col-span-10">
-            <p className="t-1 muted">We are not asking for a national launch.</p>
-            <p className="display t-3 num">One city. Twenty-five audiologists. One year. <span className="accent">€500,000.</span></p>
-            <p className="t-1">Judge us on one number: conversion from first fitting to purchase.<br />Clear 40% in twelve months and you fund the second city.<br />Miss it and you have lost one city, not a rollout.</p>
-            <h2 className="t-4 mt-16">Will you give us the first city?</h2>
-          </div>
+      <section id="ask" aria-labelledby="ask-t" className="wrap pb-6">
+        <div className="card card-ink flex min-h-[85vh] flex-col justify-center gap-8 py-[clamp(4rem,10vw,8rem)]">
+          <p className="t-1 muted">We are not asking for a national launch.</p>
+          <p className="display t-3 num max-w-[20ch]">One city. Twenty-five audiologists. One year. <span className="text-signal">€500,000.</span></p>
+          <p className="t-1 muted">Judge us on one number: conversion from first fitting to purchase. Clear <strong className="text-paper">40%</strong> in twelve months and you fund the second city. Miss it and you have lost one city, not a rollout.</p>
+          <h2 id="ask-t" className="t-4 mt-8 max-w-[14ch]">Will you give us the first city?</h2>
         </div>
       </section>
 
-      <footer className="shell rule py-10 t--1 muted">
-        <p className="col-span-12">ExSilent Ytango Mix · Marketing &amp; Sales Innovation Game · Copenhagen Business School · Team 3. Figures from the UK market booklet supplied with the case.</p>
+      <footer className="wrap py-10 t--1 muted">
+        <p>ExSilent Ytango Mix · Marketing &amp; Sales Innovation Game · Copenhagen Business School · Team 3. Figures from the UK market booklet supplied with the case.</p>
       </footer>
     </>
   );

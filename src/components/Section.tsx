@@ -1,23 +1,18 @@
 import type { ReactNode } from "react";
 
-type Props = {
-  id: string;
-  /** Only for real sequences (journey, lessons). Section order is not numbered. */
-  index?: string;
-  label: string;
-  children: ReactNode;
-};
+type Props = { id: string; eyebrow: string; title?: ReactNode; lede?: ReactNode; children: ReactNode; className?: string };
 
-/** Layout shell for every section: section label in the left rail, content on the grid. */
-export function Section({ id, index, label, children }: Props) {
+/** Every section: eyebrow + big headline, then content. */
+export function Section({ id, eyebrow, title, lede, children, className = "" }: Props) {
   return (
-    <section id={id} aria-labelledby={`${id}-label`} className="section">
-      <div className="shell">
-        <p id={`${id}-label`} className="eyebrow col-span-12 md:col-span-2">
-          {index && <span className="num">{index} · </span>}
-          {label}
-        </p>
-        <div className="col-span-12 md:col-span-10 lg:col-span-9">{children}</div>
+    <section id={id} aria-labelledby={`${id}-t`} className={`section ${className}`}>
+      <div className="wrap">
+        <div className="mb-[clamp(2.5rem,5vw,4.5rem)] flex flex-col gap-5">
+          <p className="eyebrow">{eyebrow}</p>
+          {title ? <h2 id={`${id}-t`} className="t-3 max-w-[18ch]">{title}</h2> : <h2 id={`${id}-t`} className="sr-only">{eyebrow}</h2>}
+          {lede && <p className="t-1 muted">{lede}</p>}
+        </div>
+        {children}
       </div>
     </section>
   );

@@ -1,19 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, IBM_Plex_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Geist } from "next/font/google";
 import "./globals.css";
 
-const instrument = Instrument_Serif({
-  variable: "--font-instrument",
+const display = Plus_Jakarta_Sans({
+  variable: "--font-display-face",
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+  weight: ["600", "700", "800"],
   display: "swap",
 });
 
-const plex = IBM_Plex_Sans({
-  variable: "--font-plex",
+const body = Geist({
+  variable: "--font-body-face",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -23,17 +21,17 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#14110f",
-  colorScheme: "dark",
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${instrument.variable} ${plex.variable} antialiased`}>
+    <html lang="en" className={`${display.variable} ${body.variable} antialiased`}>
       <body>
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-bone focus:px-4 focus:py-2 focus:text-basalt"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-paper focus:rounded-full"
         >
           Skip to content
         </a>
