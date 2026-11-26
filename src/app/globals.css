@@ -122,3 +122,25 @@ tbody tr:last-child td { border-bottom: 0; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   [data-reveal] { opacity: 1 !important; transform: none !important; }
 }
+
+/* ---------- Effects ---------- */
+/* Hero wave: draws itself on load, then breathes gently. */
+.wave-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: wave-draw 1.8s var(--ease-out) 0.2s forwards; }
+.wave-breathe { transform-origin: 50% 50%; animation: wave-breathe 6s ease-in-out 2s infinite; }
+@keyframes wave-draw { to { stroke-dashoffset: 0; } }
+@keyframes wave-breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.55); } }
+
+/* Bars grow once when their card is revealed. Full width at rest. */
+.grow-x { transform-origin: left center; }
+[data-reveal="armed"] .grow-x { transform: scaleX(0); }
+[data-reveal="shown"] .grow-x { transform: scaleX(1); transition: transform 1100ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 200ms); }
+
+/* Cards lift slightly on hover. */
+.card { transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out); }
+@media (hover: hover) {
+  .card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -24px rgba(14, 13, 12, 0.35); }
+}
+
+/* Accent words get a soft underline sweep. */
+.text-signal { background: linear-gradient(var(--signal), var(--signal)) left 92% / 100% 0.08em no-repeat; }
+.card-ink .text-signal, .t-4 .text-signal { background: none; }

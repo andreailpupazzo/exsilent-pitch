@@ -11,7 +11,7 @@ function Wave({ className = "" }: { className?: string }) {
   }).join(" ");
   return (
     <svg viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden className={className}>
-      <polyline points={pts} fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      <polyline className="wave-line wave-breathe" pathLength={1} points={pts} fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
     </svg>
   );
 }
@@ -39,7 +39,7 @@ function Bar({ label, value, display, max, tone = "bg-ink" }: { label: string; v
         <span className="display t-2 num">{display}</span>
       </div>
       <div className="h-5 rounded-full bg-paper">
-        <div className={`h-full rounded-full ${tone}`} style={{ width: `${(value / max) * 100}%` }} />
+        <div className={`grow-x h-full rounded-full ${tone}`} style={{ width: `${(value / max) * 100}%` }} />
       </div>
     </div>
   );
@@ -134,7 +134,7 @@ export default function Home() {
 
       <Beat id="channels" eyebrow="Three channels" title="€400,000. Each channel has one job.">
         <Reveal className="card flex flex-col gap-8">
-          <div className="flex h-14 overflow-hidden rounded-full" role="img" aria-label="Budget split: Website €100,000, Partners €100,000, Platform €200,000">
+          <div className="grow-x flex h-14 overflow-hidden rounded-full" role="img" aria-label="Budget split: Website €100,000, Partners €100,000, Platform €200,000">
             <div className="flex w-1/4 items-center bg-mist pl-5 font-semibold outline outline-2 -outline-offset-2 outline-ink/15">25%</div>
             <div className="flex w-1/4 items-center bg-ink pl-5 font-semibold text-paper">25%</div>
             <div className="flex w-1/2 items-center bg-signal pl-5 font-semibold">50%</div>
