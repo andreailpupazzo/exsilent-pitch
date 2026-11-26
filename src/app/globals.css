@@ -142,5 +142,5 @@ tbody tr:last-child td { border-bottom: 0; }
 }
 
 /* Accent words get a soft underline sweep. */
-.text-signal { background: linear-gradient(var(--signal), var(--signal)) left 92% / 100% 0.08em no-repeat; }
-.card-ink .text-signal, .t-4 .text-signal { background: none; }
+span.text-signal { background: linear-gradient(var(--signal), var(--signal)) left 92% / 100% 0.08em no-repeat; }
+.card-ink .text-signal, .t-4 span.text-signal { background: none; }
