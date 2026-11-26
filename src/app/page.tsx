@@ -86,44 +86,19 @@ export default function Home() {
 
       {/* CONTEXT — starting reasoning, from the UK market booklet */}
       <Beat id="context" eyebrow="Where we started" title="We play only where people pay for themselves.">
-        <div className="grid gap-4 lg:grid-cols-[1fr_1.2fr]">
+        <div className="grid gap-4">
           <Reveal className="card flex flex-col gap-8">
             <p className="muted t--1">UK hearing aids sold in 2025 · 2,407,653</p>
             <div className="grow-x flex h-14 overflow-hidden rounded-full" role="img" aria-label="NHS 78%, private 22%">
               <div className="flex w-[78%] items-center bg-ink pl-5 font-semibold text-paper">NHS 78%</div>
               <div className="flex w-[22%] items-center justify-center bg-signal font-semibold">22%</div>
             </div>
-            <dl className="grid grid-cols-2 gap-6">
+            <dl className="grid grid-cols-2 gap-6 lg:grid-cols-4">
               <div><dd className="display t-2 num">520,818</dd><dt className="muted">sold privately, where ExSilent sells</dt></div>
               <div><dd className="display t-2 num text-signal">+10%</dd><dt className="muted">private growth vs 2024</dt></div>
               <div><dd className="display t-2 num">16% → 22%</dd><dt className="muted">users buying privately, 2022 → 2025</dt></div>
               <div><dd className="display t-2 num">99%</dd><dt className="muted">of hearing aids made by the Big Five</dt></div>
             </dl>
-          </Reveal>
-          <Reveal step={1} className="card table-wrap">
-            <p className="muted t--1 mb-4">Seven UK segments · which one to pick</p>
-            <table className="t--1">
-              <thead><tr><th>Segment</th><th>Hearing problems</th><th>Openness</th><th>Buyers, year 1</th></tr></thead>
-              <tbody>
-                {[
-                  ["Sound Lovers", "1,199,000", "30%", "14,388"],
-                  ["Young Families", "1,904,000", "18%", "14,737"],
-                  ["Empty Nesters", "2,580,000", "12%", "17,957"],
-                  ["Fashion Baby-boomers", "2,016,000", "21%", "17,781"],
-                  ["Price-Conscious Seniors", "3,432,000", "9%", "14,517"],
-                  ["Spirited Forerunners", "1,596,000", "25%", "21,546"],
-                  ["Loyal Seniors", "5,250,000", "4.5%", "15,356"],
-                ].map(([seg, hp, op, b]) => {
-                  const pick = seg === "Spirited Forerunners";
-                  return (
-                    <tr key={seg} className={pick ? "bg-signal font-semibold" : ""}>
-                      <td className={pick ? "rounded-l-xl pl-3" : ""}>{seg}</td><td>{hp}</td><td>{op}</td><td className={pick ? "rounded-r-xl pr-3" : ""}>{b}</td>
-                    </tr>
-                  );
-                })}
-                <tr className="font-semibold"><td>UK total</td><td>17,977,000</td><td>13%</td><td>116,282</td></tr>
-              </tbody>
-            </table>
           </Reveal>
         </div>
         <Reveal className="card card-ink mt-4 flex flex-col gap-6">
